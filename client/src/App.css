@@ -1,0 +1,6 @@
+#root {
+  @apply flex;
+  @apply flex-wrap;
+  @apply h-screen;
+  @apply bg-dark-100;
+}

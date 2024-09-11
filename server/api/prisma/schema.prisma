@@ -1,0 +1,97 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model comment {
+  id      String   @id @default(uuid())
+  content String   @db.VarChar(125)
+  postId  String
+  addedAt DateTime @default(now())
+  userId  String
+  post    post     @relation(fields: [postId], references: [id], map: "Comment_postId_fkey")
+  user    user     @relation(fields: [userId], references: [id], map: "Comment_userId_fkey")
+
+  @@index([postId], map: "Comment_postId_fkey")
+  @@index([userId], map: "Comment_userId_fkey")
+}
+
+model like {
+  id     String @id @default(uuid())
+  postId String
+  userId String
+  post   post   @relation(fields: [postId], references: [id], onDelete: Cascade, map: "Like_postId_fkey")
+  user   user   @relation(fields: [userId], references: [id], onDelete: Cascade, map: "Like_userId_fkey")
+
+  @@unique([postId, userId], map: "Like_postId_userId_key")
+  @@index([postId], map: "Like_postId_fkey")
+  @@index([userId], map: "Like_userId_fkey")
+}
+
+model post {
+  id        String    @id @default(uuid())
+  title     String
+  content   String?
+  published Boolean   @default(false)
+  authorId  String
+  addedAt   DateTime  @default(now())
+  likes     Int       @default(0)
+  comment   comment[]
+  like      like[]
+  user      user      @relation(fields: [authorId], references: [id], map: "Post_authorId_fkey")
+  posttag   posttag[]
+  tag       tag[]     @relation("posttag")
+
+  @@index([authorId], map: "Post_authorId_fkey")
+}
+
+model posttag {
+  postId String
+  tagId  String
+  post   post   @relation(fields: [postId], references: [id], map: "PostTag_postId_fkey")
+  tag    tag    @relation(fields: [tagId], references: [id], map: "PostTag_tagId_fkey")
+
+  @@unique([postId, tagId], map: "PostTag_postId_tagId_key")
+  @@index([tagId], map: "PostTag_tagId_fkey")
+}
+
+model tag {
+  id      String    @id @default(uuid())
+  name    String    @unique(map: "Tag_name_key")
+  posttag posttag[]
+  post    post[]    @relation("posttag")
+}
+
+model user {
+  id          String       @id @default(uuid())
+  username    String       @unique(map: "User_username_key")
+  password    String       @db.VarChar(64)
+  phoneNumber String?
+  email       String       @unique(map: "User_email_key")
+  role        user_role    @default(GUEST)
+  comment     comment[]
+  like        like[]
+  post        post[]
+  userprofile userprofile?
+}
+
+model userprofile {
+  id       String  @id @default(uuid())
+  userId   String  @unique(map: "UserProfile_userId_key")
+  bio      String?
+  website  String?
+  location String?
+  avatar   String?
+  user     user    @relation(fields: [userId], references: [id], map: "UserProfile_userId_fkey")
+}
+
+enum user_role {
+  ADMIN
+  USER
+  MODERATOR
+  GUEST
+}
