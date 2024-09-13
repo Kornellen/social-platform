@@ -1,5 +1,5 @@
 import { Router, Request, Response } from "express";
-import { body, header, param } from "express-validator";
+import { body, param } from "express-validator";
 import validateRequest from "../middleware/validator";
 import UserController from "../controllers/userController/userController";
 
