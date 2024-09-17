@@ -6,11 +6,16 @@ import Button from "../Button/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faMoon,
-  faRightToBracket,
   faSun,
   faUser,
   faUsers,
 } from "@fortawesome/free-solid-svg-icons";
+
+interface Routes {
+  path: string;
+  name: string;
+  icon?: JSX.Element;
+}
 
 export default function NavBar() {
   const { theme, changeTheme } = useTheme();
@@ -18,7 +23,7 @@ export default function NavBar() {
 
   const decodedToken = decodeJWT(token);
 
-  const routes = [
+  const routes: Routes[] = [
     {
       path: "community",
       name: "Community",
@@ -30,7 +35,6 @@ export default function NavBar() {
     routes.push({
       path: "/login",
       name: "Login",
-      icon: <FontAwesomeIcon icon={faRightToBracket} />,
     });
   } else {
     routes.push({
@@ -52,10 +56,10 @@ export default function NavBar() {
           <Link to={"/"}>Logo</Link>
         </div>
         <div className="nav-links w-full">
-          <ul className="flex justify-end items-center">
+          <ul className="flex items-center justify-end">
             <Button
               theme={theme}
-              className="border-2 h-12 rounded-md p-2 items-center flex duration-700 justify-center"
+              className="h-12 p-2 items-center flex duration-700 justify-center"
               onClick={changeTheme}
             >
               {theme == "light" ? (
@@ -67,12 +71,12 @@ export default function NavBar() {
             {routes.map((route, index) => {
               return (
                 <Link
-                  className="border-2 gap-5 m-2 rounded p-2"
+                  className="gap-5 m-2 rounded p-2"
                   to={route.path}
                   key={index}
                   title={route.name}
                 >
-                  {route.icon} {route.name}
+                  {route?.icon} {route.name}
                 </Link>
               );
             })}

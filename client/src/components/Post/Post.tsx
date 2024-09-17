@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-//Hookes
+//Hooks
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { useFetch } from "../../hooks/useFetch";

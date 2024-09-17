@@ -8,6 +8,7 @@ import {
   Post,
   Community,
   UnderConstrucionPage,
+  NotFound,
 } from "../pages";
 
 export default function AppRoutes(): JSX.Element {
@@ -28,7 +29,7 @@ export default function AppRoutes(): JSX.Element {
         <Route index element={<Dashboard />} />
         <Route path="settings" element={<UnderConstrucionPage />} />
       </Route>
-      <Route path="*" element={<UnderConstrucionPage />} />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 }

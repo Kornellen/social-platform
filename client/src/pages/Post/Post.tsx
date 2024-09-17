@@ -60,6 +60,8 @@ export default function Post(): JSX.Element {
 
   const variant = getVariant(theme);
 
+  const addedAt = new Date(response.addedAt);
+
   return (
     <div className={`h-screen p-2 w-full text-2xl ${variant}`}>
       <div className="post h-full p-2">
@@ -73,7 +75,7 @@ export default function Post(): JSX.Element {
         </header>
         <main>
           <div className="">
-            <p>{response.addedAt}</p>
+            <p>{addedAt.toLocaleString()}</p>
           </div>
           <div className="">
             <p>{response.content}</p>
@@ -98,7 +100,7 @@ export default function Post(): JSX.Element {
               ? response.comments.map(
                   (comment: { id: string; content: string; user: string }) => (
                     <div
-                      className="comment bg-dark-700 gap-2 border-b-2 m-2 hover:bg-dark-300 hover:text-dark-600 p-2 rounded-sm"
+                      className="comment bg-dark-600 text-white gap-2 border-b-2 m-2 hover:bg-dark-300 hover:text-dark-600 p-2 rounded-md shadow-md"
                       key={comment.id}
                     >
                       <p>{comment.content}</p>

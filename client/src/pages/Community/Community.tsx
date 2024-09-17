@@ -1,6 +1,6 @@
 import { useAuth } from "../../context/AuthContext";
 import Post from "../../components/Post/Post";
-import User from "./components/User";
+import User from "../../components/User/User";
 import { useTheme } from "../../context/ThemeContext";
 import { getVariant } from "../../assets/Themes/themes";
 

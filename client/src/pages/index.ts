@@ -6,6 +6,7 @@ import User from "./User/User";
 import Post from "./Post/Post";
 import Community from "./Community/Community";
 import UnderConstrucionPage from "./UnderConstruction/UnderConstruction";
+import NotFound from "./NotFound/404";
 
 export {
   Home,
@@ -16,4 +17,5 @@ export {
   Post,
   Community,
   UnderConstrucionPage,
+  NotFound,
 };
